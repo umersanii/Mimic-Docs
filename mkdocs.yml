@@ -1,8 +1,8 @@
 site_name: Mimic Docs
 site_description: Mimic — a webcam-controlled, tendon-driven robotic hand. Architecture, build, and simulation docs.
-site_url: https://umersanii.github.io/Mimic-docs/
-repo_url: https://github.com/umersanii/Mimic-docs
-repo_name: umersanii/Mimic-docs
+site_url: https://umersanii.github.io/Mimic-Docs/
+repo_url: https://github.com/umersanii/Mimic-Docs
+repo_name: umersanii/Mimic-Docs
 edit_uri: edit/main/docs/
 
 theme:

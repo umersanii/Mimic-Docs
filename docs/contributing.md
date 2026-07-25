@@ -8,7 +8,7 @@ guide (workflow, code style, issue reporting).
 ## Contributing to *these docs*
 
 This docs site is its own repo
-([umersanii/Mimic-docs](https://github.com/umersanii/Mimic-docs)), built with
+([umersanii/Mimic-Docs](https://github.com/umersanii/Mimic-Docs)), built with
 [MkDocs](https://www.mkdocs.org/) and the [Material theme](https://squidfunk.github.io/mkdocs-material/).
 
 To preview changes locally:

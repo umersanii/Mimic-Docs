@@ -1,4 +1,4 @@
-# Mimic-docs
+# Mimic-Docs
 
 Documentation site for [umersanii/Mimic](https://github.com/umersanii/Mimic) — a
 webcam-controlled, tendon-driven robotic hand.
