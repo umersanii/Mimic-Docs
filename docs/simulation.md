@@ -8,7 +8,7 @@ Stack: **Gazebo Sim (Harmonic) + ROS2 Jazzy**, run in Docker. This is a separate
 `isaac-sim-setup.md` runbook in the repo root. See [Isaac Sim Notes](isaac-sim.md) for why that
 exists and why it's unrelated to this hand project.
 
-<video src="assets/img/sim-mirror-demo.mp4" autoplay loop muted playsinline style="width:100%;border-radius:8px;"></video>
+<video src="../assets/img/sim-mirror-demo.mp4" autoplay loop muted playsinline style="width:100%;border-radius:8px;"></video>
 
 *The vision pipeline's HUD (top left) driving the simulated hand in real time:
 `hand_tracker.py --no-serial --gazebo`.*

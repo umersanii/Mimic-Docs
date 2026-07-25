@@ -2,7 +2,7 @@
 
 Code: [`vision/hand_tracker.py`](https://github.com/umersanii/Mimic/blob/main/vision/hand_tracker.py)
 
-<video src="assets/img/tracking-demo.mp4" autoplay loop muted playsinline style="width:100%;border-radius:8px;"></video>
+<video src="../assets/img/tracking-demo.mp4" autoplay loop muted playsinline style="width:100%;border-radius:8px;"></video>
 
 ## What it does, for non-programmers
 
