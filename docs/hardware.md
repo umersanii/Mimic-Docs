@@ -1,6 +1,10 @@
 # Hardware & BOM
 
-Source: [`hardware/BOM.md`](https://github.com/umersanii/Mimic/blob/main/hardware/BOM.md)
+!!! info "Planned — not yet in the main repo"
+    The main [Mimic](https://github.com/umersanii/Mimic) repo is simulation-only for now. This
+    page documents the hardware plan; the `hardware/` directory (BOM, wiring notes) will be added
+    to that repo once the physical hand is actually built.
+
 Status: **not yet built** — the parts list below is settled, but a few decisions are still open
 (marked below).
 

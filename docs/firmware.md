@@ -1,6 +1,9 @@
 # Firmware & Serial Protocol
 
-Code: [`firmware/hand_controller/hand_controller.ino`](https://github.com/umersanii/Mimic/blob/main/firmware/hand_controller/hand_controller.ino)
+!!! info "Planned — not yet in the main repo"
+    The main [Mimic](https://github.com/umersanii/Mimic) repo is simulation-only for now. This
+    page documents the firmware design; the `firmware/` directory will be added to that repo once
+    the physical hand is actually built and wired up.
 
 ## What it does, for non-programmers
 
