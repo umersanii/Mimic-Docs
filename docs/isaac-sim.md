@@ -3,7 +3,7 @@
 !!! note "Unrelated to the hand project"
     This page documents a separate track: running **NVIDIA Isaac Sim** headlessly on the project
     maintainer's specific machine (Arch Linux, RTX 3070 Ti). The robotic hand is **not** simulated
-    in Isaac Sim — that work moved to [Gazebo](simulation.md). This runbook is kept for reference
+    in Isaac Sim; that work moved to [Gazebo](simulation.md). This runbook is kept for reference
     (or for other future robotics work on the same machine), not because the hand needs it.
 
 The full runbook lives in the main repo: `isaac-sim-setup.md`.
@@ -45,7 +45,7 @@ docker run --rm --runtime=nvidia -e ACCEPT_EULA=Y nvcr.io/nvidia/isaac-sim:5.0.0
   ./python.sh /isaac-sim/standalone_examples/api/omni.isaac.core/hello_world.py
 ```
 
-ROS2 Humble ships bundled inside the `isaac-sim:5.0.0` image — no host ROS2 install is needed for
+ROS2 Humble ships bundled inside the `isaac-sim:5.0.0` image, so no host ROS2 install is needed for
 this track (contrast with the [Gazebo track](simulation.md), which uses ROS2 Jazzy on the host/in
 its own container).
 

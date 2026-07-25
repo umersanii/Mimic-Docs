@@ -4,8 +4,8 @@ Terms used throughout these docs, explained plainly first, with the technical de
 
 **Tendon-driven**
 : A finger design where a motor pulls a string (the "tendon") to curl the finger, instead of a
-motor sitting inside each joint. Mirrors how your own fingers work — the muscles are in your
-forearm, tendons carry the pull down into the finger.
+motor sitting inside each joint. Mirrors how your own fingers work: the muscles are in your
+forearm, and tendons carry the pull down into the finger.
 
 **MCP / PIP / DIP joint**
 : Anatomical names for finger joints, used loosely in the code/docs for the tracked landmark
@@ -13,27 +13,27 @@ points. MCP = knuckle (where finger meets palm), PIP = middle joint, DIP = joint
 The thumb only has 2 of these (no true PIP).
 
 **Landmark**
-: One tracked (x, y, z) point on the hand, as reported by MediaPipe. 21 per hand — wrist plus 4
+: One tracked (x, y, z) point on the hand, as reported by MediaPipe. 21 per hand: wrist plus 4
 per finger.
 
 **MediaPipe**
 : Google's machine-learning library used here for hand tracking. Specifically the newer **Tasks
-API** (`HandLandmarker`), not the older `mp.solutions.hands` API removed in recent versions — see
+API** (`HandLandmarker`), not the older `mp.solutions.hands` API removed in recent versions. See
 [Vision Pipeline](vision.md#the-mediapipe-model).
 
 **EMA (exponential moving average)**
 : A simple smoothing technique: each new value is blended with the previous smoothed value by a
 weight, rather than used raw. Used here to remove frame-to-frame jitter from tracked finger angles
-before sending them anywhere — see [Vision Pipeline](vision.md#smoothing).
+before sending them anywhere. See [Vision Pipeline](vision.md#smoothing).
 
 **Serial (protocol)**
 : A simple one-way stream of text over a USB cable, here carrying one line of 5 numbers per video
-frame from the PC to the Arduino. No acknowledgement, no handshake — see
+frame from the PC to the Arduino. No acknowledgement, no handshake. See
 [Firmware & Serial Protocol](firmware.md#the-protocol).
 
 **Servo (motor)**
 : A small motor that can be commanded to hold a specific angular position (0-180°), rather than
-just spinning at a speed. Used here — one per finger — to pull the tendon a controlled amount.
+just spinning at a speed. Used here, one per finger, to pull the tendon a controlled amount.
 
 **Curl fraction**
 : A 0.0-1.0 number representing how curled a finger is (0=straight, 1=fully curled in the
@@ -41,7 +41,7 @@ simulation's convention), derived from the tracked joint angle. See
 [Vision Pipeline](vision.md#from-angle-to-output-value).
 
 **URDF / SDF**
-: Text file formats that describe a robot's physical structure — links (rigid parts), joints
+: Text file formats that describe a robot's physical structure: links (rigid parts), joints
 (how they connect and move), visual meshes, collision shapes, and mass/inertia. URDF is ROS's
 format; SDF is Gazebo's native format (this project converts URDF → SDF for the hand model).
 
@@ -53,7 +53,7 @@ matching the real hardware's 1-motor-per-finger design. See
 
 **Physics engine (dartsim / bullet-featherstone)**
 : The underlying simulator that computes how forces, joints, and collisions actually move objects
-in Gazebo. Gazebo supports several interchangeable engines — this project uses two different ones
+in Gazebo. Gazebo supports several interchangeable engines; this project uses two different ones
 for different worlds, because one of them doesn't support a feature (mimic joints) the hand model
 needs. See [Simulation](simulation.md#the-mimic-joint-physics-engine-gotcha).
 

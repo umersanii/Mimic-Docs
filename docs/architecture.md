@@ -5,7 +5,7 @@ pub/sub message bus for the simulation). Each piece can be developed and tested 
 
 ```mermaid
 flowchart TD
-    subgraph PC["PC — robohand conda env"]
+    subgraph PC["PC: robohand conda env"]
         direction TB
         A([Webcam]) --> B[MediaPipe HandLandmarker]
         B --> C[Angle math + EMA smoothing]
@@ -13,7 +13,7 @@ flowchart TD
         C --> E["CSV curl values 0-1\nover a pipe"]
     end
 
-    subgraph Ard["Arduino — planned, not yet built"]
+    subgraph Ard["Arduino: planned, not yet built"]
         direction TB
         F[hand_controller.ino] --> G[5x Servo.write]
     end
@@ -37,12 +37,12 @@ flowchart TD
 ## Why it's split this way
 
 **The vision code doesn't know about servos, and the firmware doesn't know about MediaPipe.** The
-interface between them is a plain serial line carrying 5 numbers — that's it. This means:
+interface between them is a plain serial line carrying 5 numbers, that's it. This means:
 
 - You can test the vision pipeline with zero hardware (`--no-serial`).
 - You can test the firmware/servos with a serial terminal, typing angles by hand, no webcam needed.
 - The simulation is a third consumer of the *same* tracked-angle data, not a special case bolted onto
-  the vision code — see [why the sim bridge is a separate process](simulation.md#why-a-separate-process-not-a-library-call).
+  the vision code. See [why the sim bridge is a separate process](simulation.md#why-a-separate-process-not-a-library-call).
 
 ## The four pieces
 
@@ -56,7 +56,7 @@ interface between them is a plain serial line carrying 5 numbers — that's it. 
 ## Data flow, step by step
 
 1. **Webcam frame → landmarks.** MediaPipe's `HandLandmarker` returns 21 (x, y, z) points per
-   detected hand — wrist, and 4 joints per finger. See [Vision Pipeline](vision.md).
+   detected hand: wrist, and 4 joints per finger. See [Vision Pipeline](vision.md).
 2. **Landmarks → angle per finger.** For each finger, the angle at the middle joint (wrist→MCP→tip
    for four fingers, base→joint→tip for the thumb) is computed with the law of cosines. 180° = fully
    straight, smaller = more curled.
@@ -76,6 +76,6 @@ interface between them is a plain serial line carrying 5 numbers — that's it. 
 
 Servos take 0-180 (degrees); Gazebo's joint controllers in this world are wired for a 0.0-1.0 curl
 fraction to keep the sim math independent of any particular servo's physical range. Both are
-derived from the same smoothed angle in `vision/hand_tracker.py` — `curl_fraction()` and
+derived from the same smoothed angle in `vision/hand_tracker.py`: `curl_fraction()` and
 `angle_to_servo()` are two small pure functions off the same input, not two separate tracking
 pipelines.

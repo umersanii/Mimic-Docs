@@ -1,6 +1,6 @@
 # Mimic-Docs
 
-Documentation site for [umersanii/Mimic](https://github.com/umersanii/Mimic) — a
+Documentation site for [umersanii/Mimic](https://github.com/umersanii/Mimic), a
 webcam-controlled, tendon-driven robotic hand.
 
 Built with [MkDocs](https://www.mkdocs.org/) + the [Material theme](https://squidfunk.github.io/mkdocs-material/),

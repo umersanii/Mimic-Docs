@@ -1,7 +1,7 @@
 # Contributing
 
 Code contributions go against the main repo:
-[umersanii/Mimic](https://github.com/umersanii/Mimic) — see its
+[umersanii/Mimic](https://github.com/umersanii/Mimic). See its
 [CONTRIBUTING.md](https://github.com/umersanii/Mimic/blob/main/CONTRIBUTING.md) for the full
 guide (workflow, code style, issue reporting).
 
@@ -31,4 +31,4 @@ GitHub if you spot something wrong while reading.
 1. Create the `.md` file under `docs/`.
 2. Add it to the `nav:` list in `mkdocs.yml`, or it won't show up in the sidebar.
 3. Keep the same tone as the rest of the site: a plain-language explanation first, technical
-   detail after — see the existing pages for the pattern.
+   detail after. See the existing pages for the pattern.
