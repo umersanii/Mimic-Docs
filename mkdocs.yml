@@ -7,27 +7,37 @@ edit_uri: edit/main/docs/
 
 theme:
   name: material
+  icon:
+    logo: material/hand-front-right-outline
+  favicon: material/hand-front-right-outline.svg
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: indigo
+      primary: teal
       accent: amber
       toggle:
         icon: material/weather-night
         name: Switch to dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: indigo
+      primary: teal
       accent: amber
       toggle:
         icon: material/weather-sunny
         name: Switch to light mode
+  font:
+    text: Inter
+    code: JetBrains Mono
   features:
     - navigation.instant
     - navigation.tracking
     - navigation.top
+    - navigation.footer
+    - navigation.indexes
     - content.code.copy
+    - content.code.annotate
     - content.action.edit
+    - content.tabs.link
     - toc.follow
 
 markdown_extensions:
