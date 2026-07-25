@@ -23,13 +23,19 @@ the servo releases tension. One motor, one string, one finger.
 
 ```mermaid
 flowchart LR
-    A[Webcam] --> B["MediaPipe\n(hand landmark detection)"]
-    B --> C["Per-finger angle math\n(vision/hand_tracker.py)"]
-    C --> D["Serial line\nthumb,index,middle,ring,pinky"]
-    D --> E["Arduino\n(firmware/hand_controller)"]
-    E --> F["5x servo motors"]
-    F --> G["Tendons pull fingers closed"]
-    C -.optional.-> H["Gazebo simulation\n(no hardware needed)"]
+    A([Webcam]) --> B["MediaPipe\nhand landmark detection"]
+    B --> C["Per-finger angle math\nvision/hand_tracker.py"]
+    C --> D["Gazebo simulation\nno hardware needed"]
+
+    C -.planned.-> E["Serial line\nthumb,index,middle,ring,pinky"]
+    E -.planned.-> F["Arduino\nfirmware/hand_controller"]
+    F -.planned.-> G["5x servo motors"]
+    G -.planned.-> H(["Tendons pull\nfingers closed"])
+
+    classDef active fill:#26a69a,stroke:#00695c,color:#fff
+    classDef planned fill:#eceff1,stroke:#90a4ae,stroke-dasharray:4 3,color:#546e7a
+    class A,B,C,D active
+    class E,F,G,H planned
 ```
 
 See [Architecture](architecture.md) for the full breakdown of each stage, or jump straight to

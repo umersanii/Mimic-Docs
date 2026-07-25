@@ -5,22 +5,33 @@ pub/sub message bus for the simulation). Each piece can be developed and tested 
 
 ```mermaid
 flowchart TD
-    subgraph PC["PC (robohand conda env)"]
-        A[Webcam] --> B[MediaPipe HandLandmarker]
+    subgraph PC["PC — robohand conda env"]
+        direction TB
+        A([Webcam]) --> B[MediaPipe HandLandmarker]
         B --> C[Angle math + EMA smoothing]
-        C --> D["Serial: 'thumb,index,middle,ring,pinky\\n'"]
-        C --> E["CSV curl values (0-1) over a pipe"]
+        C --> D["Serial line\nthumb,index,middle,ring,pinky"]
+        C --> E["CSV curl values 0-1\nover a pipe"]
     end
-    subgraph Arduino
-        D --> F[hand_controller.ino]
-        F --> G[5x Servo.write]
+
+    subgraph Ard["Arduino — planned, not yet built"]
+        direction TB
+        F[hand_controller.ino] --> G[5x Servo.write]
     end
-    subgraph "Docker container: robotics-gazebo"
-        E --> H[gz_hand_bridge.py]
-        H --> I["Gazebo Transport\n/cmd_pos topics"]
+
+    subgraph Sim["Docker container: robotics_gazebo_sim"]
+        direction TB
+        H[gz_hand_bridge.py] --> I["Gazebo Transport\n/cmd_pos topics"]
         I --> J[Simulated hand model]
     end
-    G --> K[Real tendons pull, fingers curl]
+
+    D -.-> F
+    E --> H
+    G -.-> K(["Real tendons pull,\nfingers curl"])
+
+    classDef active fill:#26a69a,stroke:#00695c,color:#fff
+    classDef planned fill:#eceff1,stroke:#90a4ae,stroke-dasharray:4 3,color:#546e7a
+    class A,B,C,D,E,H,I,J active
+    class F,G,K planned
 ```
 
 ## Why it's split this way
