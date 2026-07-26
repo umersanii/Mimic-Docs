@@ -1,0 +1,1339 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Mimic — a webcam-controlled, tendon-driven robotic hand. Architecture, build, and simulation docs.">
+      
+      
+      
+        <link rel="canonical" href="https://umersanii.github.io/Mimic-Docs/simulation/">
+      
+      
+        <link rel="prev" href="../hardware/">
+      
+      
+        <link rel="next" href="../glossary/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../material/hand-front-right-outline.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Simulation (Gazebo) - Mimic Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#simulation-gazebo" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Mimic Docs" class="md-header__button md-logo" aria-label="Mimic Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.5 8c-.17 0-.34 0-.5.05V4.5A2.5 2.5 0 0 0 15.5 2c-.19 0-.37 0-.54.06A2.5 2.5 0 0 0 12.5 0c-1.06 0-1.96.66-2.33 1.59A2.5 2.5 0 0 0 7 4v.55c-.16-.05-.33-.05-.5-.05A2.5 2.5 0 0 0 4 7v8.5c0 4.69 3.81 8.5 8.5 8.5s8.5-3.81 8.5-8.5v-5A2.5 2.5 0 0 0 18.5 8m.5 7.5a6.5 6.5 0 1 1-13 0V7c0-.28.22-.5.5-.5s.5.22.5.5v5h2V4c0-.28.22-.5.5-.5s.5.22.5.5v7h2V2.5c0-.28.22-.5.5-.5s.5.22.5.5V11h2V4.5c0-.28.22-.5.5-.5s.5.22.5.5v8.92c-1.77.77-3 2.53-3 4.58h2c0-1.66 1.34-3 3-3v-4.5c0-.28.22-.5.5-.5s.5.22.5.5z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Mimic Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Simulation (Gazebo)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/umersanii/Mimic-Docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    umersanii/Mimic-Docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Mimic Docs" class="md-nav__button md-logo" aria-label="Mimic Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.5 8c-.17 0-.34 0-.5.05V4.5A2.5 2.5 0 0 0 15.5 2c-.19 0-.37 0-.54.06A2.5 2.5 0 0 0 12.5 0c-1.06 0-1.96.66-2.33 1.59A2.5 2.5 0 0 0 7 4v.55c-.16-.05-.33-.05-.5-.05A2.5 2.5 0 0 0 4 7v8.5c0 4.69 3.81 8.5 8.5 8.5s8.5-3.81 8.5-8.5v-5A2.5 2.5 0 0 0 18.5 8m.5 7.5a6.5 6.5 0 1 1-13 0V7c0-.28.22-.5.5-.5s.5.22.5.5v5h2V4c0-.28.22-.5.5-.5s.5.22.5.5v7h2V2.5c0-.28.22-.5.5-.5s.5.22.5.5V11h2V4.5c0-.28.22-.5.5-.5s.5.22.5.5v8.92c-1.77.77-3 2.53-3 4.58h2c0-1.66 1.34-3 3-3v-4.5c0-.28.22-.5.5-.5s.5.22.5.5z"/></svg>
+
+    </a>
+    Mimic Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/umersanii/Mimic-Docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    umersanii/Mimic-Docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vision/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vision Pipeline
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../firmware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Firmware & Serial Protocol
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hardware & BOM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simulation (Gazebo)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simulation (Gazebo)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#world-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        World files
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-hand-models-provenance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The hand model's provenance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The hand model&#39;s provenance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2nd-generation-myrobotlabinmoov_ros-meshes-both-hands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2nd generation: MyRobotLab/inmoov_ros meshes, both hands
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#driver-joint-topology-redesigned-not-copied" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Driver-joint topology (redesigned, not copied)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wrist-joint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wrist joint
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mount-pose-convention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mount pose convention
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environment-staging-workbench-backdrop-lighting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment staging: workbench, backdrop, lighting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-mimic-joint-physics-engine-gotcha" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The mimic-joint physics engine gotcha
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-vision-to-gazebo-bridge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The vision to Gazebo bridge
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The vision to Gazebo bridge">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-a-separate-process-not-a-library-call" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why a separate process, not a library call
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gotchas-worth-knowing-before-extending-the-bridge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gotchas worth knowing before extending the bridge
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-issue-fixed-the-hand-appears-to-jitter-its-rendering-not-physics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Known issue (fixed): the hand appears to jitter (it's rendering, not physics)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-issue-fixed-rubber-band-jitter-during-and-after-real-motion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Known issue (fixed): "rubber band" jitter during and after real motion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-issue-fixed-right-hands-ringpinky-curled-partway-backward" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Known issue (fixed): right hand's ring/pinky curled partway backward
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#world-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        World files
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-hand-models-provenance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The hand model's provenance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The hand model&#39;s provenance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2nd-generation-myrobotlabinmoov_ros-meshes-both-hands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2nd generation: MyRobotLab/inmoov_ros meshes, both hands
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#driver-joint-topology-redesigned-not-copied" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Driver-joint topology (redesigned, not copied)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wrist-joint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wrist joint
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mount-pose-convention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mount pose convention
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environment-staging-workbench-backdrop-lighting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment staging: workbench, backdrop, lighting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-mimic-joint-physics-engine-gotcha" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The mimic-joint physics engine gotcha
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-vision-to-gazebo-bridge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The vision to Gazebo bridge
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The vision to Gazebo bridge">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-a-separate-process-not-a-library-call" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why a separate process, not a library call
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gotchas-worth-knowing-before-extending-the-bridge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gotchas worth knowing before extending the bridge
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-issue-fixed-the-hand-appears-to-jitter-its-rendering-not-physics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Known issue (fixed): the hand appears to jitter (it's rendering, not physics)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-issue-fixed-rubber-band-jitter-during-and-after-real-motion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Known issue (fixed): "rubber band" jitter during and after real motion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-issue-fixed-right-hands-ringpinky-curled-partway-backward" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Known issue (fixed): right hand's ring/pinky curled partway backward
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/umersanii/Mimic-Docs/edit/main/docs/simulation.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="simulation-gazebo">Simulation (Gazebo)<a class="headerlink" href="#simulation-gazebo" title="Permanent link">&para;</a></h1>
+<p>The simulation lets the vision pipeline drive a physically accurate 3D hand model <strong>before</strong> the
+real hardware exists, useful for testing tracking, tuning, and the control pipeline without
+waiting on a 3D printer or wiring.</p>
+<p>Stack: <strong>Gazebo Sim (Harmonic) + ROS2 Jazzy</strong>, run in Docker.</p>
+<video src="../assets/img/sim-mirror-demo.mp4" autoplay loop muted playsinline style="width:100%;border-radius:8px;"></video>
+
+<p><em>The vision pipeline's HUD (top left) driving the simulated hand in real time:
+<code>hand_tracker.py --no-serial --gazebo</code>.</em></p>
+<p><img alt="The simulated hand at rest in Gazebo" src="../assets/img/sim-closeup.png" /></p>
+<h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">cd</span> sim/docker
+docker build -t robotics-gazebo .
+./run.sh
+</code></pre></div>
+<p><code>run.sh</code> mounts the whole <code>sim/</code> directory to <code>/sim</code> in the container (not just <code>worlds/</code>, since
+mesh files live under <code>sim/models/</code>), sets <code>GZ_SIM_RESOURCE_PATH=/sim/models</code>, and names the
+container <code>robotics_gazebo_sim</code>, a stable name that other tooling (like the vision bridge) targets
+with <code>docker exec</code>.</p>
+<h2 id="world-files">World files<a class="headerlink" href="#world-files" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong><code>sim/worlds/box_world.sdf</code></strong>: a minimal learning rig (pendulum, hinge, box) for getting a feel
+  for Gazebo joints and physics before touching the hand model. Uses the <code>dartsim</code> physics engine.</li>
+<li><strong><code>sim/worlds/hand_world.sdf</code></strong> + <strong><code>sim/models/hand/{left,right}/</code></strong>: the actual hand model —
+  both hands, fixed in space via a world-mount joint so fingers/wrist can be exercised directly
+  through <code>JointPositionController</code> topics without an arm or gravity-compensation setup. Uses
+  <code>bullet-featherstone</code>, not <code>dartsim</code>. See <a href="#the-mimic-joint-physics-engine-gotcha">why</a> below.</li>
+<li>The world also stages a <code>workbench</code> (table) and <code>backdrop_wall</code> around the hands, plus a <code>sun</code>
+  key light and two dim <code>fill_light_*</code> point lights, so it renders as a small workshop scene
+  rather than two hands floating in a void. See
+  <a href="#environment-staging-workbench-backdrop-lighting">Environment staging</a> below.</li>
+<li><strong><code>sim/worlds/gui/{left_hand,right_hand}.config</code></strong>: <code>--gui-config</code> camera presets, picked at
+  launch time (stock <code>gz-sim</code> has no in-session preset switcher):
+  <div class="highlight"><pre><span></span><code>gz sim -g sim/worlds/gui/left_hand.config sim/worlds/hand_world.sdf
+</code></pre></div>
+  Launching without <code>-g</code> uses the world's own overview camera instead.</li>
+</ul>
+<h2 id="the-hand-models-provenance">The hand model's provenance<a class="headerlink" href="#the-hand-models-provenance" title="Permanent link">&para;</a></h2>
+<h3 id="2nd-generation-myrobotlabinmoov_ros-meshes-both-hands">2nd generation: MyRobotLab/inmoov_ros meshes, both hands<a class="headerlink" href="#2nd-generation-myrobotlabinmoov_ros-meshes-both-hands" title="Permanent link">&para;</a></h3>
+<p><code>sim/models/hand/{left,right}/hand.urdf</code> are <strong>generated</strong>, not hand-authored — by
+<a href="https://github.com/umersanii/Mimic/blob/main/sim/models/hand/generate_hand.py"><code>sim/models/hand/generate_hand.py</code></a>,
+checked into the repo. It builds each side's URDF from mesh + joint-origin data transcribed out of
+<a href="https://github.com/MyRobotLab/inmoov_ros">MyRobotLab/inmoov_ros</a>'s <code>inmoov_description</code> /
+<code>inmoov_meshes</code> packages (CC-licensed — <code>LICENSE.txt</code> is copied into each side's directory).</p>
+<p>This replaced a 1st-generation model extracted from
+<a href="https://github.com/Sentience-Robotics/inmoov_ros_sim">Sentience-Robotics/inmoov_ros_sim</a>'s
+whole-body sim rig, which had rougher meshes (that repo optimized for physics/joint structure, not
+visual quality) and only covered the left hand.</p>
+<p><strong>Full regeneration pipeline</strong> (needs <code>gz</code> on <code>PATH</code> — run inside the <code>robotics-gazebo</code> container):</p>
+<div class="highlight"><pre><span></span><code>python3 generate_hand.py                    <span class="c"># writes {left,right}/hand.urdf</span>
+gz sdf -p left/hand.urdf <span class="o">&gt;</span> left/hand.sdf    <span class="c"># and the same for right/</span>
+gz sdf -p right/hand.urdf <span class="o">&gt;</span> right/hand.sdf
+python3 build_world.py                       <span class="c"># assembles sim/worlds/hand_world.sdf</span>
+</code></pre></div>
+<p><code>build_world.py</code> fixes up mesh URIs (relative-to-itself in <code>hand.sdf</code>, but relative-to-<code>worlds/</code>
+once embedded in <code>hand_world.sdf</code>) and re-adds visual material, since <code>gz sdf -p</code> silently drops a
+URDF's <code>&lt;material&gt;&lt;color/&gt;&lt;/material&gt;</code> during conversion.</p>
+<div class="admonition warning">
+<p class="admonition-title">Regenerating the world overwrites hand-tuned staging</p>
+<p><code>build_world.py</code> is a from-scratch template — it does <strong>not</strong> know about the workbench,
+backdrop, lighting, or the PID gains described below. Running it will silently revert all of
+that back to defaults. If you need to touch a joint's geometry, prefer a targeted edit of the
+generated <code>hand.sdf</code>/<code>hand.urdf</code> plus a surgical patch to <code>hand_world.sdf</code>, or be ready to
+reapply the staging/tuning by hand afterward.</p>
+</div>
+<p>Why transcribed by hand instead of run through the real <code>xacro</code> toolchain: the source repo's
+<code>asmHand.urdf.xacro</code> macro is parameterized by <code>side</code>/<code>flip</code> exactly the way this project needs
+(mirrors correctly, no manual mirroring math), but its joint-limit properties resolve through
+<code>$(find inmoov_bringup)/config/config.yaml</code> via real ROS package-path resolution — not worth
+standing up a colcon workspace for a one-time generation step. <code>generate_hand.py</code> resolves the
+same macro logic (side/flip substitution) directly in Python instead.</p>
+<p>A few values intentionally do <strong>not</strong> carry over from the source repo:</p>
+<ul>
+<li><strong>Joint limits/velocity</strong> keep this project's existing <code>0..1.5708</code> rad / <code>0.7854</code> rad/s
+  convention (matching <code>sim/bridge/gz_hand_bridge.py</code>'s <code>JOINT_MAX_RAD</code> scaling) rather than the
+  source's <code>config.yaml</code> <code>minGoal</code>/<code>maxGoal</code>, which is real per-servo calibration in degrees tied
+  to different hardware.</li>
+<li><strong>Inertial values</strong> are box-formula inertia from hand-estimated masses (~5-90g per link, by
+  structural role), computed from each mesh's own STL bounding box — not the source's
+  <code>config.inertial.urdf.xacro</code> macros, whose mass units are ambiguous and not worth trusting
+  unverified.</li>
+<li><strong>Coupling ratios.</strong> See driver-joint topology below.</li>
+</ul>
+<h3 id="driver-joint-topology-redesigned-not-copied">Driver-joint topology (redesigned, not copied)<a class="headerlink" href="#driver-joint-topology-redesigned-not-copied" title="Permanent link">&para;</a></h3>
+<p>The source repo picks the <em>middle</em> joint of each 3-joint finger chain as the tendon-driven
+"actuated" joint (e.g. <code>index_joint</code>, between <code>index1_link</code> and <code>index2_link</code>), with <code>index1_joint</code>
+— upstream, closer to <code>hand_link</code> — mimicking it. That pattern doesn't work here: see the
+<a href="#the-mimic-joint-physics-engine-gotcha">upstream-mimic gotcha</a> below.</p>
+<p><code>generate_hand.py</code> reassigns the driver to whichever joint in each finger chain sits directly off
+<code>hand_link</code> (e.g. <code>index1_joint</code>), with every other joint in that chain mimicking it 1:1. The
+source repo's non-1:1 coupling ratios (e.g. <code>thumb1 = 0.75 * thumb</code>, <code>ring1 = -0.1 * ring</code>, tuned
+for the <em>other</em> joint being the driver) were dropped in favor of flat 1:1 mimics — still a
+coordinated curl, just not a literal reproduction of the source robot's exact coupling.</p>
+<h3 id="wrist-joint">Wrist joint<a class="headerlink" href="#wrist-joint" title="Permanent link">&para;</a></h3>
+<p><code>wrist_joint</code> (<code>forearm_link</code> → <code>hand_link</code>, axis <code>(0,0,1)</code>) is the real InMoov
+<code>{l,r}_wrist_roll_joint</code> from the source repo's full-body assembly (<code>inmoov.urdf.xacro</code>), not
+invented for this project. It has its own <code>JointPositionController</code> topic per side
+(<code>/inmoov_{left,right}_hand/wrist_joint/cmd_pos</code>), so it's testable via <code>gz topic pub</code>, but nothing
+in <code>vision/hand_tracker.py</code> or the bridge drives it yet — 2D MediaPipe landmarks can't reliably
+estimate forearm roll without the forearm in view. Left and right have mirrored ranges (right:
+<code>-π..0</code>, left: <code>0..π</code>) — command within the correct side's range or the controller silently can't
+reach the target.</p>
+<h3 id="mount-pose-convention">Mount pose convention<a class="headerlink" href="#mount-pose-convention" title="Permanent link">&para;</a></h3>
+<p>Each hand's per-model <code>&lt;pose&gt;</code> carries a 180° roll + 90° yaw correction. With that roll, the
+forearm/hand assembly extends <em>upward</em> from <code>base_link</code>'s origin (fingers up) — <code>base_link</code>'s
+origin is effectively the forearm's cut/elbow end, not the fingertip end. Both hands mount at
+<code>z=0.45</code>, the workbench's top surface, so each hand visually stands up from the table on that
+elbow end.</p>
+<h2 id="environment-staging-workbench-backdrop-lighting">Environment staging: workbench, backdrop, lighting<a class="headerlink" href="#environment-staging-workbench-backdrop-lighting" title="Permanent link">&para;</a></h2>
+<p><code>hand_world.sdf</code> stages a small workshop scene around the hands rather than leaving them floating
+in a void:</p>
+<ul>
+<li><strong><code>workbench</code></strong>: a table the hands stand on. It's modeled as <strong>one link with 5
+  collision/visual elements</strong> (table top + 4 legs), not 5 separate links — <code>bullet-featherstone</code>
+  rejects any model with more than one link and no joints connecting them ("Multiple sub-trees /
+  floating links detected... not supported"), even for a purely static prop with no physics need
+  for a joint tree. Any future static multi-part prop in this world needs the same one-link
+  pattern.</li>
+<li><strong><code>backdrop_wall</code></strong>: placed at <code>y=-0.45</code>, tied to the overview camera's viewing direction. The
+  camera pose (<code>0.5 0.5 1.3 0 0.3 -2.35</code>) sits at +x/+y looking toward the origin, so the open/front
+  side is +y and "behind" the hands is -y. Moving the overview camera without checking this will
+  point it back through the wall.</li>
+<li><strong>Lighting</strong>: a <code>sun</code> directional key light plus <code>fill_light_left</code>/<code>fill_light_right</code>, two dim
+  point lights on the camera's side (<code>y=+0.6</code>) for workshop "softbox" fill, so the hands don't read
+  as flat/silhouetted from the overhead sun alone. They were originally placed at <code>y=-0.6</code> —
+  <em>behind</em> the backdrop wall — by mistake, and did nothing since the wall blocked them from ever
+  reaching the hands.</li>
+</ul>
+<h2 id="the-mimic-joint-physics-engine-gotcha">The mimic-joint physics engine gotcha<a class="headerlink" href="#the-mimic-joint-physics-engine-gotcha" title="Permanent link">&para;</a></h2>
+<p>This is the single most important thing to know if you're extending this simulation:</p>
+<div class="admonition warning">
+<p class="admonition-title"><code>dartsim</code> silently ignores <code>&lt;mimic&gt;</code> joints</p>
+<p><code>box_world.sdf</code> uses <code>dartsim</code>, and that's fine for a pendulum/hinge/box learning rig. But this
+Gazebo build's <code>dartsim</code> <strong>silently ignores <code>&lt;mimic&gt;</code> constraints</strong>. It logs "physics engine
+does not support mimic constraints" and just leaves the joint free/unconstrained. Nothing
+crashes; the mimic'd joints just... don't mimic.</p>
+<p><code>bullet-featherstone</code> was verified to apply mimic correctly (tested: commanding one driver
+joint moved all 3 mimic-coupled finger joints together, as intended) — <strong>but only when the
+driver joint is proximal</strong> (attached directly to <code>hand_link</code>) <strong>and every mimic joint is
+downstream of it</strong> in the kinematic tree. A driver with an <em>upstream</em> mimic joint (closer to
+the tree root than the driver itself) silently gets zero effective torque. This is why
+<code>generate_hand.py</code> reassigns each finger's driver to the joint directly off <code>hand_link</code> — see
+<a href="#driver-joint-topology-redesigned-not-copied">driver-joint topology</a> above — rather than
+keeping the source repo's original choice of driver.</p>
+<p><strong>Any new world file relying on mimic joints must set <code>type="bullet-featherstone"</code></strong> and add</p>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;engine&gt;&lt;filename&gt;</span>gz-physics-bullet-featherstone-plugin<span class="nt">&lt;/filename&gt;&lt;/engine&gt;</span>
+</code></pre></div>
+<p>inside the <code>Physics</code> system plugin block. Don't copy <code>box_world.sdf</code>'s <code>dartsim</code> config for
+hand/mimic-joint work without changing this: it'll "run" with no errors and just be wrong.</p>
+</div>
+<h2 id="the-vision-to-gazebo-bridge">The vision to Gazebo bridge<a class="headerlink" href="#the-vision-to-gazebo-bridge" title="Permanent link">&para;</a></h2>
+<p>Code: <a href="https://github.com/umersanii/Mimic/blob/main/sim/bridge/gz_hand_bridge.py"><code>sim/bridge/gz_hand_bridge.py</code></a></p>
+<p>This lets <code>vision/hand_tracker.py</code> (running on the host, in the <code>robohand</code> conda env) drive the
+simulated hand in real time, in parallel with, or instead of, the real Arduino
+(<code>--gazebo</code> flag; <code>--no-serial</code> to skip real hardware entirely).</p>
+<h3 id="why-a-separate-process-not-a-library-call">Why a separate process, not a library call<a class="headerlink" href="#why-a-separate-process-not-a-library-call" title="Permanent link">&para;</a></h3>
+<p><code>gz.transport13</code>/<code>gz.msgs10</code> (the Python bindings for talking to Gazebo) only exist inside the
+<code>robotics-gazebo</code> Docker image. The host's <code>robohand</code> conda env has no path to them (confirmed via
+<code>apt list --installed</code> inside the container). So <code>hand_tracker.py</code> launches the bridge with:</p>
+<div class="highlight"><pre><span></span><code><span class="n">docker</span> <span class="n">exec</span> <span class="o">-</span><span class="n">i</span> <span class="n">robotics_gazebo_sim</span> <span class="n">python3</span> <span class="o">/</span><span class="n">sim</span><span class="o">/</span><span class="n">bridge</span><span class="o">/</span><span class="n">gz_hand_bridge</span><span class="o">.</span><span class="n">py</span>
+</code></pre></div>
+<p>and streams one CSV line per currently-tracked hand per frame — <code>L,thumb,index,middle,ring,pinky</code>
+or <code>R,...</code> (curl fractions <code>0.0</code>=straight to <code>1.0</code>=curled, the same convention
+<code>hand_tracker.py</code>'s own <code>curls</code> dict uses) — over that one persistent pipe. Not a subprocess call
+per frame: one process, one long-lived stdin pipe, for the whole session. If a hand leaves the
+webcam frame, <code>hand_tracker.py</code> holds its last-known curls in <code>smoothed_angles</code> rather than
+snapping to a default pose — losing tracking shouldn't visibly jolt the sim hand.</p>
+<h3 id="gotchas-worth-knowing-before-extending-the-bridge">Gotchas worth knowing before extending the bridge<a class="headerlink" href="#gotchas-worth-knowing-before-extending-the-bridge" title="Permanent link">&para;</a></h3>
+<p><strong>1. Topic names must match the driver joint name exactly.</strong>
+<code>hand_world.sdf</code>'s <code>JointPositionController</code> plugins subscribe to e.g.
+<code>/inmoov_left_hand/index1_joint/cmd_pos</code> — the bridge's <code>JOINT_NAMES</code> dict must stay in sync with
+whichever joint <code>generate_hand.py</code> picked as each finger's driver (see
+<a href="#driver-joint-topology-redesigned-not-copied">driver-joint topology</a> above), or publishes go to a
+topic nobody's listening on and nothing happens, with no error.</p>
+<p><strong>2. A one-shot publish right after <code>advertise()</code> can be dropped.</strong>
+Gazebo Transport discovery (multicast, finding existing subscribers) takes on the order of ~1
+second. Publish once immediately after advertising and tear the process down right after, and
+you can race past that discovery window with nothing delivered. This isn't an issue for the real
+use case (continuous per-frame streaming for a whole session, discovery settles well within the
+first second, and everything after lands normally), but it'll bite you if you write a quick one-shot
+test script against the bridge.</p>
+<p><strong>3. The bridge deadbands per-finger before publishing.</strong> <code>DEADBAND = 0.01</code>: a curl value within
+that tolerance of the last one actually sent for that side+finger is dropped rather than
+republished. MediaPipe landmark noise passes through <code>hand_tracker.py</code>'s EMA largely intact away
+from the fully-open/closed clipped extremes, so a hand held still but not at a curl extreme was
+resending near-identical targets every frame. This cuts needless command traffic but was <strong>not</strong>
+the fix for the rubber-band overshoot issue below — that was a joint-controller torque problem,
+not a signal-noise problem.</p>
+<h2 id="known-issue-fixed-the-hand-appears-to-jitter-its-rendering-not-physics">Known issue (fixed): the hand appears to jitter (it's rendering, not physics)<a class="headerlink" href="#known-issue-fixed-the-hand-appears-to-jitter-its-rendering-not-physics" title="Permanent link">&para;</a></h2>
+<p>If you look closely at the simulated hand, even completely at rest with zero commands being sent,
+it visibly jitters/shimmers.</p>
+<p>This was diagnosed by subscribing directly to every joint's <code>axis1.position</code> at the sim's own
+~1kHz update rate for 3 seconds with nothing commanded: every joint sat flat to within ~1e-8 rad.
+Physics/joint state is provably static; the jitter is a <strong>rendering artifact</strong>, not a control or
+physics instability.</p>
+<p>Root cause (a real Gazebo/gz-sim limitation, not filed upstream): the default directional-light
+shadow-map resolution/depth-bias is tuned for room/building-scale scenes (meters). This hand is
+~10cm with many small phalanx meshes packed closely together, and at that scale, the default
+shadow map produces shadow acne (flickering self-shadow noise) that reads visually as jitter.</p>
+<p>The initial workaround was to disable shadows entirely (<code>&lt;cast_shadows&gt;false&lt;/cast_shadows&gt;</code> on
+the sun light), which avoided the jitter but left the hand flat and shadowless. The actual fix:
+shadows are back on for the sun light, but <code>cast_shadows</code> is set <code>false</code> per-visual on each of the
+36 individual finger-segment <code>&lt;visual&gt;</code> elements — the actual acne source, since it's specifically
+many small, close-packed meshes — while left at its default <code>true</code> for <code>hand_link</code>/<code>forearm_link</code>
+and the workbench/backdrop. That still produces a visible overall hand/arm shadow on the bench
+without the small phalanx meshes flickering. Any new small finger-adjacent visual added to the
+hand model needs the same <code>cast_shadows=false</code> treatment, or the acne returns for that mesh.</p>
+<h2 id="known-issue-fixed-rubber-band-jitter-during-and-after-real-motion">Known issue (fixed): "rubber band" jitter during and after real motion<a class="headerlink" href="#known-issue-fixed-rubber-band-jitter-during-and-after-real-motion" title="Permanent link">&para;</a></h2>
+<p>Separate from the rendering artifact above, the hand also visibly overshot and bounced back
+around its target — during motion driven by the vision pipeline, and persisting afterward even
+with no hand in the webcam frame. That ruled out MediaPipe landmark noise as the cause (a static
+held target shouldn't need continuous correction), and pointed at the joint controllers
+themselves.</p>
+<p><strong>Root cause: torque saturation, not classic PID underdamping.</strong> Each finger's driver joint is
+controlled by <code>gz-sim-joint-position-controller-system</code>, and every controller in
+<code>hand_world.sdf</code> used the same untuned defaults: <code>p_gain=5</code>, <code>d_gain=0.1</code>, <code>cmd_max</code>/<code>cmd_min=
+±5</code> (N·m). These numbers were never sized to the model - the finger links are a few grams each,
+with an effective inertia at the driver joint (own inertia + parallel-axis contribution from
+every downstream mimic-linked segment, since each finger's 3-4 links move together) of roughly
+<code>I_eff ≈ 5e-5 kg·m²</code> for a 3-segment finger, computed from the real per-link mass/inertia values
+in the generated <code>hand.urdf</code> (see <code>sim/models/hand/generate_hand.py</code>).</p>
+<p>Against that inertia, <code>cmd_max=5 N·m</code> is enormous: any nonzero position error saturates the
+controller at the torque ceiling, producing angular acceleration on the order of
+<code>5 / 5e-5 ≈ 96,700 rad/s²</code>. That's a relay/bang-bang controller in disguise - full torque until
+it blows past the target, full torque back the other way, repeat - independent of the nominal
+P/D ratio, and independent of whether MediaPipe is currently tracking a hand (it happens on
+<em>any</em> target the controller hasn't yet reached, including one it was given once and is still
+converging to). It also meant <code>cmd_max</code> exceeded the URDF's own <code>effort=2.0</code> joint limit, so it
+was never a meaningfully chosen value in the first place.</p>
+<p><strong>Fix:</strong> retune each finger driver joint's gains from the actual link mass/inertia instead of
+copy-pasted defaults - <code>p_gain</code> and <code>d_gain</code> picked for critical damping (<code>d_gain = 2*sqrt(p_gain
+* I_eff)</code>) at a settle time on the order of a camera frame or two, and <code>cmd_max</code>/<code>cmd_min</code> capped
+to the peak torque a critically-damped response actually needs (plus margin), not an arbitrary
+round number. Applied uniformly to all 10 finger driver joints (5 fingers x 2 hands) in
+<code>hand_world.sdf</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;p_gain&gt;</span>0.45<span class="nt">&lt;/p_gain&gt;</span>
+<span class="nt">&lt;i_gain&gt;</span>0<span class="nt">&lt;/i_gain&gt;</span><span class="w">      </span><span class="cm">&lt;!-- was 0.05: integral windup at this torque scale was another</span>
+<span class="cm">                              oscillation source, with no steady-state droop to justify it --&gt;</span>
+<span class="nt">&lt;d_gain&gt;</span>0.0135<span class="nt">&lt;/d_gain&gt;</span>
+<span class="nt">&lt;i_max&gt;</span>0.1<span class="nt">&lt;/i_max&gt;</span>
+<span class="nt">&lt;i_min&gt;</span>-0.1<span class="nt">&lt;/i_min&gt;</span>
+<span class="nt">&lt;cmd_max&gt;</span>1.0<span class="nt">&lt;/cmd_max&gt;</span><span class="w">  </span><span class="cm">&lt;!-- was 5: now under the URDF&#39;s own 2.0 N*m joint effort limit --&gt;</span>
+<span class="nt">&lt;cmd_min&gt;</span>-1.0<span class="nt">&lt;/cmd_min&gt;</span>
+</code></pre></div>
+<p><code>wrist_joint</code> was deliberately left on the old defaults - it's a much larger mass (forearm +
+hand, not a few-gram phalanx) and isn't vision-driven yet, so it wasn't part of this diagnosis.
+If wrist control is added later, it needs its own inertia-derived gains, not these finger values.</p>
+<p>A companion, smaller fix went into <code>sim/bridge/gz_hand_bridge.py</code>: a per-finger deadband
+(<code>DEADBAND = 0.01</code>) that skips re-publishing a curl value within that tolerance of the last one
+actually sent, so MediaPipe's per-frame landmark noise (which passes through the EMA smoothing
+in <code>hand_tracker.py</code> largely intact away from the fully-open/closed clipped extremes) doesn't
+keep resending near-identical targets every frame. This alone wasn't the fix for the rubber-band
+effect - the torque saturation above was - but it's worth keeping since it cuts needless command
+traffic and any residual micro-jitter from noise.</p>
+<h2 id="known-issue-fixed-right-hands-ringpinky-curled-partway-backward">Known issue (fixed): right hand's ring/pinky curled partway backward<a class="headerlink" href="#known-issue-fixed-right-hands-ringpinky-curled-partway-backward" title="Permanent link">&para;</a></h2>
+<p>Only on the right hand, and only two fingers: commanding ring and pinky to curl produced a curl
+that was visibly bent partway backward instead of cleanly forward. Left hand, and every other
+finger on the right hand, curled correctly.</p>
+<p><strong>Root cause: a mirroring bug in <code>generate_hand.py</code>, not a per-side data-transcription error.</strong>
+The script mirrors left/right by flipping a joint's position (<code>y</code>) and <code>rpy</code> (<code>x</code>-rotation) by a
+per-side <code>flip</code> factor (<code>-1</code> for left, <code>+1</code> for right), but originally left every driver joint's
+rotation <code>axis</code> hardcoded the same for both sides — <code>(0,0,1)</code> for the z-axis driver joints
+(<code>thumb1_joint</code>, <code>ring1_joint</code>, <code>pinky1_joint</code>), <code>(0,1,0)</code> for the y-axis ones (<code>index1_joint</code>,
+<code>middle1_joint</code>).</p>
+<p>That's fine for the axis vector's <em>spatial</em> direction — it ends up correctly mirrored in
+<code>hand_link</code>'s frame either way — but not for rotation <em>handedness</em>. Under a y-mirror, a
+positive-angle rotation about a z-axis reverses its physical sense (<code>R_z(θ) → R_z(-θ)</code>), while a
+positive-angle rotation about a y-axis does not (<code>R_y(θ) → R_y(θ)</code>, unaffected). That asymmetry
+maps exactly onto the two joint families:</p>
+<ul>
+<li><strong><code>index1_joint</code>/<code>middle1_joint</code></strong> (axis <code>y</code>) are unaffected by the mirror-parity issue, so both
+  hands curl identically — consistent with them never showing the bug.</li>
+<li><strong><code>thumb1_joint</code>/<code>ring1_joint</code>/<code>pinky1_joint</code></strong> (axis <code>z</code>) <em>do</em> pick up a handedness flip on one
+  side, but it only becomes visible through the <code>rpy</code> x-tilt those joints carry (that tilt is what
+  mixes the z-rotation into a y/z blend in the parent frame). <code>thumb1_joint</code>'s tilt is small
+  (<code>flip * 0.1</code> rad ≈ 6°), so the wrong-handed component was too tiny to notice. <code>ring1_joint</code>/
+  <code>pinky1_joint</code>'s tilt is much larger (<code>flip * 0.7</code> rad ≈ 40°), so the wrong-handed component was
+  large enough to visibly bend the curl backward — this bug was latent in the thumb the whole
+  time, just invisible.</li>
+</ul>
+<p><strong>Fix:</strong> the three z-axis driver joints' <code>axis</code> is now <code>(0, 0, -flip)</code> instead of a hardcoded
+<code>(0, 0, 1)</code>. Left hand (<code>flip=-1</code>) keeps its original, already-correct axis unchanged; right hand
+(<code>flip=1</code>) gets it flipped. Any new z-axis driver joint added to a finger chain needs the same
+<code>-flip</code> treatment in <code>generate_hand.py</code>, not a hardcoded axis vector.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../hardware/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Hardware &amp; BOM">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Hardware & BOM
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../glossary/" class="md-footer__link md-footer__link--next" aria-label="Next: Glossary">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Glossary
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.top", "navigation.footer", "navigation.indexes", "content.code.copy", "content.code.annotate", "content.action.edit", "content.tabs.link", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
